@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use DB;
 
 class ProductController extends Controller
 {
@@ -26,8 +27,20 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
-    }
+        $validator = Validator::make($request->all(), [
+            'id_category' => $request->id_category,
+        
+        ]);
+
+        $id_category = $request->id_category;
+        $title = $request->product;
+        $title = $request->description;
+        $title = $request->image;
+        $title = $request->price;
+        $title = $request->stock;
+        $title = $request->status;
+
+        $postproduct = DB::connection ('mysql') -> insert("INSERT INTO product_models (id_category, product, description, image,  ")    }
 
     /**
      * Store a newly created resource in storage.
