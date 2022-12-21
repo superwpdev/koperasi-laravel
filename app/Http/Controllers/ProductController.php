@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -14,11 +14,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-       $res_product = DB::select("select * from product_models as p inner join product_category_models as pc on p.id_category = pc.id");
-       //dd($res_product);
-       $title = "ini halaman product";
+        $res_product = DB::select("select * from product_models as p inner join product_category_models as pc on p.id_category = pc.id");
+        //dd($res_product);
+        $title = "ini halaman product";
 
-       return view('front.product',compact('title','res_product'));
+        return view('front.product', compact('title', 'res_product'));
     }
 
     /**
@@ -28,7 +28,6 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return
     }
 
     /**
