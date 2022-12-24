@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ProductCategoryController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\VoucherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 route::get('getproduct', [ProductController::class, 'index']);
+route ::post('postproduct',[ProductController::class,'create']);
 route::get('getproductcategory', [ProductCategoryController::class, 'index']);
