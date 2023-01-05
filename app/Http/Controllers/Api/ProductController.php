@@ -14,10 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $res_product = DB::select("select * from product_models as p inner join product_category_models ")
-        $title = "ini halaman product";
-
-        return view('front.product',compact('title','res_product'));
+        return view('product.index')
     }
 
     /**
