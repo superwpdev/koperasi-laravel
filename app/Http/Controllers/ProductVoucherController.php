@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use DB;
-class ProductController extends Controller
+
+class ProductVoucherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +13,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $res_product = DB::select("select * from product_models as p inner join product_category_models ")
-        $title = "ini halaman product";
-
-        return view('front.product',compact('title','res_product'));
+        //
     }
 
     /**
