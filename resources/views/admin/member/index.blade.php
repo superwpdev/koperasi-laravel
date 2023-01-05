@@ -1,10 +1,10 @@
-@include('admin/layout.layout')
+@extends('admin/layout.layout')
 @section('css')
 
 @endsection
 
 @section('konten')
-kontenya 
+ini konten member
 @endsection
 
 @section('script')
