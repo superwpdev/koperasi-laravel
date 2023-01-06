@@ -15,7 +15,8 @@ class MemberController extends Controller
     public function index()
     {
         $res_member = DB::select('select * from member_models');
-        return view('front.member', compact('res_member'));
+        return view('admin.member.index',compact('res_member'));
+       
     }
 
     /**
