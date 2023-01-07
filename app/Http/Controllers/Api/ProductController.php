@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 
 class ProductController extends Controller
 {
@@ -14,7 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $res_product = DB::select('select * from product_models');
+        return $res_product;
     }
 
     /**
@@ -35,7 +37,29 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id = $request->id;
+        $id_category = $request->id_category;
+        $product = $request->product;
+        $description = $request->description;
+        $image = $request->image;
+        $price = $request->price;
+        $stock = $request->stock;
+        $status = $request->status;
+
+        dump($id);
+        dump($id_category);
+        dump($product);
+        dump($description);
+        dump($image);
+        dump($price);
+        dump($stock);
+        dump($status);
+
+        DB::insert("INSERT INTO product_models (id,id_category,product,description,image,price,stock,status)
+VALUES (" . $id . "," . $id_category . ",'" . $product . "','" . $description . "','" . $image . "'," . $price . "," . $stock . ",'" . $status . "')");
+
+
+        dd("test ini endpoint post product");
     }
 
     /**
