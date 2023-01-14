@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductVoucherController extends Controller
 {
@@ -13,7 +14,11 @@ class ProductVoucherController extends Controller
      */
     public function index()
     {
-        //
+        $res_member = DB::select("select * from voucher_models");
+        //dd($res_voucher);
+        $title = "ini halaman voucher";
+
+        return view('front.voucher', compact('title', 'res_voucher'));
     }
 
     /**

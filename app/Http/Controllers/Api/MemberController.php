@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use DB;
+
 
 class MemberController extends Controller
 {
@@ -14,19 +17,51 @@ class MemberController extends Controller
      */
     public function index()
     {
-        //
+        $response = DB::connection('mysql')->select('select * from member_models');
+        return $response;
     }
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
-    }
+        $validator = Validator::make($request->all(), [
+            'id' => $request->id,
+        
+        ]);
 
+        $id = $request->id;
+        $name = $request->name;
+        $address = $request->address;
+        $telp = $request->telp;
+        $email = $request->email;
+        $status = $request->status;
+        
+
+        $postmember = DB ::connection ('mysql') -> insert( "INSERT INTO member_models (id, name, address, telp, email, status)
+        VALUE
+        ('".$id."', '".$name."', '".$address."', '".$telp."', '".$email."', '".$status."')");
+        
+        if ($postmember){
+            $res = response()->json(
+                [
+                    'status'=> 'succes'
+                ], 200) ;
+        }
+        else
+        {
+            $res = response()-> json(
+                [
+                'status' => 'failed'
+            ],500) ;
+            
+        }
+        return $res;
+        }
     /**
      * Store a newly created resource in storage.
      *

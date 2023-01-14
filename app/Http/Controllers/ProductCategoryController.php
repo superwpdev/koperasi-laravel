@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class ProductCategoryController extends Controller
 {
@@ -14,8 +14,13 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $res_member = DB::select("select * from product_category_models");
+        //dd($res_product_category);
+        $title = "ini halaman product_category";
+
+        return view('front.productcategory', compact('title', 'res_productcategory'));
     }
+
 
     /**
      * Show the form for creating a new resource.

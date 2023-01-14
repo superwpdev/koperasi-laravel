@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use DB;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class ProductCategoryController extends Controller
 {
@@ -24,11 +26,36 @@ class ProductCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
-    }
+        $validator = Validator::make($request->all(), [
+            'category' => $request->category,
+        
+        ]);
 
+        $category = $request->category;
+        $status = $request->status;
+
+        $postproductcategory = DB ::connection ('mysql') -> insert( "INSERT INTO product_category_models (category,status)
+        VALUE
+        ('".$category."', '".$status."')");
+        
+        if ($postproductcategory){
+            $res = response()->json(
+                [
+                    'status'=> 'succes'
+                ], 200) ;
+        }
+        else
+        {
+            $res = response()-> json(
+                [
+                'status' => 'failed'
+            ],500) ;
+            
+        }
+        return $res;
+        }
     /**
      * Store a newly created resource in storage.
      *

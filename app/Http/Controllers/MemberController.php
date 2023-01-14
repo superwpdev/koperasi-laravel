@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MemberController extends Controller
 {
@@ -13,7 +14,11 @@ class MemberController extends Controller
      */
     public function index()
     {
-        //
+        $res_member = DB::select("select * from member_models");
+        //dd($res_member);
+        $title = "ini halaman member";
+
+        return view('front.member', compact('title', 'res_member'));
     }
 
     /**
