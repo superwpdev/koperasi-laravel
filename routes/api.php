@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ProductCategoryController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\MemberController;
 use App\Http\Controllers\Api\VoucherController;
+use App\Http\Controllers\Api\ContactController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +30,4 @@ route::get('getmember', [MemberController::class, 'index']);
 route ::post('postmember',[MemberController::class,'create']);
 route::get('getvoucher', [VoucherController::class, 'index']);
 route::post('postvoucher', [VoucherController::class, 'create']);
+route::get('getcontact', [ContactController::class, 'index']);
