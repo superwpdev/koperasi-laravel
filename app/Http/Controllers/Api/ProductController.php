@@ -40,6 +40,8 @@ class ProductController extends Controller
         $price = $request->price;
         $stock = $request->stock;
         $status = $request->status;
+      
+
 
         $postproduct = DB ::connection ('mysql') -> insert( "INSERT INTO product_models (id_category, product, description, image, price, stock, status)
         VALUE

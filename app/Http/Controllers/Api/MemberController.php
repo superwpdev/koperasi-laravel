@@ -30,11 +30,11 @@ class MemberController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id' => $request->id,
+            'name' => $request->name,
         
         ]);
 
-        $id = $request->id;
+       
         $name = $request->name;
         $address = $request->address;
         $telp = $request->telp;
@@ -42,9 +42,9 @@ class MemberController extends Controller
         $status = $request->status;
         
 
-        $postmember = DB ::connection ('mysql') -> insert( "INSERT INTO member_models (id, name, address, telp, email, status)
+        $postmember = DB ::connection ('mysql') -> insert( "INSERT INTO member_models (name, address, telp, email, status)
         VALUE
-        ('".$id."', '".$name."', '".$address."', '".$telp."', '".$email."', '".$status."')");
+        ('".$name."', '".$address."', '".$telp."', '".$email."', '".$status."')");
         
         if ($postmember){
             $res = response()->json(
