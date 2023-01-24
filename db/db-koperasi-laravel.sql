@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Jan 2023 pada 06.01
+-- Waktu pembuatan: 24 Jan 2023 pada 15.42
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.27
 
@@ -37,6 +37,13 @@ CREATE TABLE `contact_models` (
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `contact_models`
+--
+
+INSERT INTO `contact_models` (`id`, `name`, `email`, `subject`, `message`, `created_at`, `updated_at`) VALUES
+(1, 'bagus', 'bagussetyawan@gmail.com', 'pesan', 'dadkadjak', '2023-01-14 12:02:50', '2023-01-14 12:02:53');
+
 -- --------------------------------------------------------
 
 --
@@ -60,7 +67,8 @@ CREATE TABLE `member_models` (
 
 INSERT INTO `member_models` (`id`, `name`, `address`, `telp`, `email`, `status`, `created_at`, `updated_at`) VALUES
 (2, 'baru', 'grogol', '08972739', 'bagusse@gmail.com', 'aktif', '2022-12-24 02:41:57', '2022-12-24 02:41:57'),
-(3, 'bgs', 'grogol', '08930983', 'abgsu', 'tidak aktif', NULL, NULL);
+(3, 'bgs', 'grogol', '08930983', 'abgsu', 'tidak aktif', NULL, NULL),
+(4, 'bgs', 'grogol', '08930983', 'abgsu', 'tidak aktif', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -83,7 +91,9 @@ CREATE TABLE `product_category_models` (
 INSERT INTO `product_category_models` (`id`, `category`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'buku', 'ada', '2022-12-24 02:38:16', '2022-12-24 02:38:16'),
 (2, 'alat tulis', 'ada', NULL, NULL),
-(3, 'alat tulis', 'ada', NULL, NULL);
+(3, 'alat tulis', 'ada', NULL, NULL),
+(4, 'alat tulis', 'ada', NULL, NULL),
+(5, 'alat tulis', 'ada', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -123,7 +133,12 @@ INSERT INTO `product_models` (`id`, `id_category`, `product`, `description`, `im
 (12, '3', 'kacang', 'kacang garuda', '', 10000, 90, 'ada', NULL, NULL),
 (13, '3', 'kacang', 'kacang garuda', '', 10000, 90, 'ada', NULL, NULL),
 (14, '3', 'kacang', 'kacang garuda', '', 10000, 90, 'ada', NULL, NULL),
-(15, '3', 'kacang', 'kacang garuda', '', 10000, 90, 'ada', NULL, NULL);
+(15, '3', 'kacang', 'kacang garuda', '', 10000, 90, 'ada', NULL, NULL),
+(16, '1', 'ayam', 'nadasdsadlsad', 'ndandla', 5000, 5, 'ada', NULL, NULL),
+(17, '3', 'kacang', 'kacang garuda', '', 10000, 90, 'ada', NULL, NULL),
+(18, '3', 'kacang', 'kacang garuda', '', 10000, 90, 'ada', NULL, NULL),
+(19, '3', 'kacang', 'kacang garuda', '', 10000, 90, 'ada', NULL, NULL),
+(20, '3', 'kacang', 'kacang garuda', '', 10000, 90, 'ada', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -147,7 +162,10 @@ CREATE TABLE `voucher_models` (
 INSERT INTO `voucher_models` (`id`, `voucher_name`, `value`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'mahasiswa', '5%', 'ada', '2022-12-24 02:40:08', '2022-12-24 02:40:08'),
 (2, 'mhs_smstr5', '10%', 'ada', NULL, NULL),
-(3, 'mhs_smstr5', '10%', 'ada', NULL, NULL);
+(3, 'mhs_smstr5', '10%', 'ada', NULL, NULL),
+(4, 'mhs_smstr5', '10%', 'ada', NULL, NULL),
+(5, 'mhs_smstr5', '10%', 'ada', NULL, NULL),
+(6, 'mhs_smstr5', '10%', 'ada', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -191,31 +209,31 @@ ALTER TABLE `voucher_models`
 -- AUTO_INCREMENT untuk tabel `contact_models`
 --
 ALTER TABLE `contact_models`
-  MODIFY `id` int(65) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(65) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `member_models`
 --
 ALTER TABLE `member_models`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `product_category_models`
 --
 ALTER TABLE `product_category_models`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `product_models`
 --
 ALTER TABLE `product_models`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT untuk tabel `voucher_models`
 --
 ALTER TABLE `voucher_models`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
