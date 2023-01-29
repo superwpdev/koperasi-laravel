@@ -107,18 +107,41 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, product_model $product)
+    public function update(Request $request)
     {
+        // $validator = Validator::make($request->all(), [
+        //     'id_category' => 'required',
+        //     'product' => 'required',
+        //     'description' => 'required',
+        //     'image' => 'required',
+        //     'price' => 'required',
+        //     'stock' => 'required',
+        //     'status' => 'required',
+        // ]);
+
+        // //response error validation
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors(), 400);
+        // }
+
+        // //update to database
+        // $product->update([
+        //     'id_category'     => $request->id_category,
+        //     'product'   => $request->product,
+        //     'description'     => $request->description,
+        //     'image'     => $request->image,
+        //     'price'     => $request->stock,
+        //     'status'     => $request->status,
+        // ]);
+        // return new ProductResource($product);
+        //set validation
         $validator = Validator::make($request->all(), [
             'id_category' => 'required',
             'product' => 'required',
             'description' => 'required',
-            'image' => 'required',
             'price' => 'required',
             'stock' => 'required',
             'status' => 'required',
-
-
         ]);
 
         //response error validation
@@ -127,15 +150,17 @@ class ProductController extends Controller
         }
 
         //update to database
-        $product->update([
+        $wali = product_model::where('id', $request->id)->update([
             'id_category'     => $request->id_category,
             'product'   => $request->product,
             'description'     => $request->description,
-            'image'     => $request->image,
             'price'     => $request->stock,
             'status'     => $request->status,
         ]);
-        return new ProductResource($product);
+
+        $result = product_model::where('id', $request->id)->first();
+
+        return new ProductResource($result);
     }
 
     /**
@@ -144,10 +169,22 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(product_model $product)
+    public function destroy(Request $request)
     {
-        $product->delete();
+        //set validation
+        $validator = Validator::make($request->all(), [
+            'id'   => 'required'
+        ]);
 
-        return new ProductResource($product);
+        //response error validation
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $wali = product_model::where('id', $request->id)->delete();
+
+        $result = array("status" => "sukses", "message" => "Hapus Berhasil");
+
+        return new ProductResource($result);
     }
 }

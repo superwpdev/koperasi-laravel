@@ -26,6 +26,7 @@ route::get('getproduct', [ProductController::class, 'index']);
 route::post('postproduct', [ProductController::class, 'create']);
 Route::put('/putproduct', 'App\Http\Controllers\Api\ProductController@update');
 Route::delete('/delproduct', 'App\Http\Controllers\Api\ProductController@destroy');
+
 route::post('postproductcategory', [ProductCategoryController::class, 'create']);
 route::get('getproductcategory', [ProductCategoryController::class, 'index']);
 route::get('getmember', [MemberController::class, 'index']);
