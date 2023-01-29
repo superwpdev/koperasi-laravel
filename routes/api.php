@@ -23,11 +23,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 route::get('getproduct', [ProductController::class, 'index']);
-route ::post('postproduct',[ProductController::class,'create']);
-route ::post('postproductcategory',[ProductCategoryController::class,'create']);
+route::post('postproduct', [ProductController::class, 'create']);
+Route::put('/putproduct', 'App\Http\Controllers\Api\ProductController@update');
+Route::delete('/delproduct', 'App\Http\Controllers\Api\ProductController@destroy');
+route::post('postproductcategory', [ProductCategoryController::class, 'create']);
 route::get('getproductcategory', [ProductCategoryController::class, 'index']);
 route::get('getmember', [MemberController::class, 'index']);
-route ::post('postmember',[MemberController::class,'create']);
+route::post('postmember', [MemberController::class, 'create']);
 route::get('getvoucher', [VoucherController::class, 'index']);
 route::post('postvoucher', [VoucherController::class, 'create']);
 route::get('getcontact', [ContactController::class, 'index']);
