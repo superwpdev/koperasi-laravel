@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use DB;
 
-class MemberController extends Controller
+class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +16,8 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $res_member = DB::select('select * from member_models');
-        return view('admin.member.index',compact('res_member'));
+    $response = DB ::connection('mysql')->select('select * from tbl_news');
+    return $response;
     }
 
     /**
@@ -23,9 +25,35 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'id_category' => $request->id_category,
+        
+        ]);
+        $id_category = $request->id_category;
+        $tittle = $request->tittle;
+        $content = $request->content;
+        
+
+        $postnews = DB::connection('mysql')->insert("INSERT INTO tbl_news (id_category, tittle, content)
+        VALUE
+        ('".$id_category."','".$tittle."','".$content."')");
+
+        if ($postnews){
+        $res = response()->json(
+        [
+        'status' => 'success'
+        ], 200);
+        }
+        else
+        {
+        $res = response()->json(
+        [
+        'status' => 'failed'
+        ], 500);
+        }
+        return $res;
     }
 
     /**
@@ -68,9 +96,14 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        // return $request;
+        $id = $request->id;
+        $tittle = $request->tittle;
+        $content = $request->content;
+        $edit=DB::connection('mysql')->update("UPDATE tbl_news SET tittle='".$tittle."', content='".$content."' WHERE id=".$id);
+        return true;
     }
 
     /**
@@ -81,6 +114,6 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('tbl_news')->delete($id);
     }
 }

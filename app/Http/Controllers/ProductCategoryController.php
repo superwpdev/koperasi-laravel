@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class ProductCategoryController extends Controller
 {
@@ -13,7 +14,8 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $res_productcategory = DB::select('select * from tbl_category');
+        return view('category.index', compact('res_productcategory'));
     }
 
     /**
@@ -23,7 +25,7 @@ class ProductCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.addcategory');
     }
 
     /**
@@ -34,7 +36,14 @@ class ProductCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $postproductcategory = DB::table('tbl_category')->insert([
+            
+            'category' => $request->input('category'),
+            
+        ]);
+
+        return redirect('/productcategory');
     }
 
     /**
@@ -56,7 +65,9 @@ class ProductCategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $resfindproduccategory = DB::select("SELECT * from tbl_category where id=".$id);
+        $findproductcategory = $resfindproduccategory[0];
+        return view('category.tampilcategory',compact('findproductcategory'));
     }
 
     /**
@@ -68,7 +79,12 @@ class ProductCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $id = $request->id;
+        $category = $request->category;
+
+        $updatenews = DB::update("UPDATE tbl_category SET category = '".$category."' WHERE id = ".$id."; ");
+        
+        return redirect()->route('productcategory');
     }
 
     /**
@@ -79,6 +95,7 @@ class ProductCategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deleteproductcategorycontroller = DB::delete("DELETE FROM tbl_category WHERE id=".$id.";");
+        return redirect()->route('productcategory');
     }
 }

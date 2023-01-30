@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class MemberController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +13,10 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $res_member = DB::select('select * from member_models');
-        return view('admin.member.index',compact('res_member'));
+        return view('dashboard.index', [
+            'title' => 'Dashboard',
+            'active' => 'dashboard'
+        ]);
     }
 
     /**

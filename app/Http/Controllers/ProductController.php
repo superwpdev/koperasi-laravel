@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use DB;
 
 class ProductController extends Controller
@@ -15,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         $res_product = DB::select('select * from product_models');
-        return view('admin.product.index',compact('res_product'));
+        return view('product.index',compact('res_product'));
     }
 
     /**
@@ -25,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+       return view('product.addproduct');
     }
 
     /**
@@ -36,7 +37,28 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $image = null;
+        if($request->hasFile('foto')){
+            $uuid = Str::uuid()->toString();
+            $image = $uuid.$request->file('foto')->getClientOriginalName();
+            $request->file('foto')->move('imageproduct/', $image);
+            
+        }
+
+        DB::table('product_models')->insert([
+            'id_category' => $request->input('id_category'),
+            'product' => $request->input('product'),
+            'description' => $request->input('description'),
+            'image' => $image,
+            'price' => $request->input('price'),
+            'stock' => $request->input('stock'),
+            'status' => $request->input('status'),
+        ]);
+        // dd($postproduct);
+       
+
+        return redirect('/product');
     }
 
     /**
@@ -47,7 +69,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -58,7 +80,10 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $resfindproduct = DB::select("SELECT * from product_models where id=".$id);
+        // dd($resfindproduct);
+        $findproduct = $resfindproduct[0];
+        return view('product.editproduct',compact('findproduct'));
     }
 
     /**
@@ -68,9 +93,43 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        // dd($request->all());
+        $image = null;
+        if($request->hasFile('foto')){
+            $uuid = Str::uuid()->toString();
+            $image = $uuid.$request->file('foto')->getClientOriginalName();
+            $request->file('foto')->move('imageproduct/', $image);
+            
+        }
+
+        // $id = $request->id;
+        // $id_category = $request->id_category;
+        // $product = $request->product;
+        // $description = $request->description;
+        // $price = $request->price;
+        // $stock = $request->stock;
+        // $status = $request->status;
+
+        // DB::update("UPDATE product_models SET id_category = '".$id_category."', product = '".$product."', description = '".$description."', price = '".$price."', stock = '".$stock."', status = '".$status."' WHERE id = ".$id."; ");
+        // return redirect()->route('product');
+        // dd($request->id);
+        // dd($image);
+        DB::table('product_models')
+        ->where('id',$request->id)
+        ->update([
+            'id_category' => $request->input('id_category'),
+            'product' => $request->input('product'),
+            'description' => $request->input('description'),
+            'image' => $image,
+            'price' => $request->input('price'),
+            'stock' => $request->input('stock'),
+            'status' => $request->input('status'),
+        ]);
+
+        // return view('product.index');
+        return redirect('product');
     }
 
     /**
@@ -81,6 +140,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deleteproduct = DB::delete("DELETE FROM product_models WHERE id=".$id.";");
+        return redirect()->route('product');
     }
 }

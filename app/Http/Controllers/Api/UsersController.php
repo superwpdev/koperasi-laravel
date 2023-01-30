@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use DB;
 
-class MemberController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +16,8 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $res_member = DB::select('select * from member_models');
-        return view('admin.member.index',compact('res_member'));
+    $response = DB ::connection('mysql')->select('select * from users');
+    return $response;
     }
 
     /**
@@ -23,9 +25,36 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'name' => $request->name,
+        
+        ]);
+        $name = $request->name;
+        $email = $request->email;
+        $password = bcrypt($request->password);
+        
+        
+
+        $postnews = DB::connection('mysql')->insert("INSERT INTO users (name, email, password)
+        VALUE
+        ('".$name."','".$email."','".$password."')");
+
+        if ($postnews){
+        $res = response()->json(
+        [
+        'status' => 'success'
+        ], 200);
+        }
+        else
+        {
+        $res = response()->json(
+        [
+        'status' => 'failed'
+        ], 500);
+        }
+        return $res;
     }
 
     /**
@@ -81,6 +110,12 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // $id=$request->id;
+        // $name=$request->name;
+        // $email=$request->email;
+        // $password=$request->password;
+        // DB::connection('mysql')->delete("DELETE FROM users WHERE id=".$id);
+        // return true;
+        DB::table('users')->delete($id);
     }
 }

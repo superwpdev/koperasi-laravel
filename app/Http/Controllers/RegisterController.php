@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class MemberController extends Controller
+class RegisterController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,10 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $res_member = DB::select('select * from member_models');
-        return view('admin.member.index',compact('res_member'));
+        return view('register.index', [
+            'title' => 'Register',
+            'active' => 'register'
+        ]);
     }
 
     /**
@@ -36,8 +38,36 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(
+            [
+                'name' => 'required|max:255',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:6|max:255'
+            ]
+
+        );
+
+        $postuser = DB::table('users')->insert([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password'))
+        ]);
+
+        // if ($postuser) {
+
+        //     return back()->with('success Registered');
+        // } else {
+        //     return back()->with('failed to register, something went wrong');
+        // }
+
+
+        $request->session()->flash('success', 'registration is successfull! pls login!');
+
+        return redirect('/login');
+        // dd($postuser);
     }
+
+
 
     /**
      * Display the specified resource.

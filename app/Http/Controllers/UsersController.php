@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 
-class MemberController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,9 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $res_member = DB::select('select * from member_models');
-        return view('admin.member.index',compact('res_member'));
+        
+        $res_users = DB::select('select * from users');
+        return view('users.index',compact('res_users'));
     }
 
     /**
@@ -81,6 +82,7 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deleteusers = DB::delete("DELETE FROM users WHERE id=".$id.";");
+        return redirect()->route('users');
     }
 }

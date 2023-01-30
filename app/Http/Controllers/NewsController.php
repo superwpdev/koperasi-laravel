@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 
-class MemberController extends Controller
+
+class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,9 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $res_member = DB::select('select * from member_models');
-        return view('admin.member.index',compact('res_member'));
+        $res_news = DB::select('select * from tbl_news');
+        return view('news.index', compact('res_news'));
+        // return view('news');
     }
 
     /**
@@ -25,7 +27,7 @@ class MemberController extends Controller
      */
     public function create()
     {
-        //
+        return view('news.addnews');
     }
 
     /**
@@ -36,7 +38,16 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // dd($request->all());
+
+        $postnews = DB::table('tbl_news')->insert([
+            'id_category' => $request->input('id_category'),
+            'tittle' => $request->input('tittle'),
+            'content' => $request->input('content')
+        ]);
+
+        return redirect('/news');
     }
 
     /**
@@ -58,7 +69,9 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        //
+        $resfindnews = DB::select("SELECT * from tbl_news where id=".$id);
+        $findnews = $resfindnews[0];
+        return view('news.tampilnews',compact('findnews'));
     }
 
     /**
@@ -70,7 +83,14 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $id = $request->id;
+        $id_category = $request->id_category;
+        $tittle = $request->tittle;
+        $content = $request->content;
+
+        $updatenews = DB::update("UPDATE tbl_news SET id_category = '".$id_category."',tittle='".$tittle."',content='".$content."' WHERE id = ".$id."; ");
+        
+        return redirect()->route('news');
     }
 
     /**
@@ -81,6 +101,7 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deletenews = DB::delete("DELETE FROM tbl_news WHERE id=".$id.";");
+        return redirect()->route('news');
     }
 }

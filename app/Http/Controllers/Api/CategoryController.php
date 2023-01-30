@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use DB;
 
-class MemberController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +16,8 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $res_member = DB::select('select * from member_models');
-        return view('admin.member.index',compact('res_member'));
+    $response = DB ::connection('mysql')->select('select * from tbl_category');
+    return $response;
     }
 
     /**
@@ -23,9 +25,32 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'category' => $request->category,
+        
+        ]);
+        $category = $request->category;
+
+        $postnews = DB::connection('mysql')->insert("INSERT INTO tbl_category (category)
+        VALUE
+        ('".$category."')");
+
+        if ($postnews){
+        $res = response()->json(
+        [
+        'status' => 'success'
+        ], 200);
+        }
+        else
+        {
+        $res = response()->json(
+        [
+        'status' => 'failed'
+        ], 500);
+        }
+        return $res;
     }
 
     /**
@@ -68,9 +93,13 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        // return $request;
+        $id=$request->id;
+        $category=$request->category;
+        $edit=DB::connection('mysql')->update("UPDATE tbl_category SET category='".$category."' WHERE id=".$id);
+        return true;
     }
 
     /**
@@ -79,8 +108,14 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy( $id)
     {
-        //
+        // return($id);
+        // return ($id);
+        // $id=$request->id;
+        // $category=$request->category;
+        DB::table('tbl_category')->delete($id);
+        // return($id);
+        // return true;
     }
 }
