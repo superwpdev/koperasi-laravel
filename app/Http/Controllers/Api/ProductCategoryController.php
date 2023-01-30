@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use DB;
 
 class ProductCategoryController extends Controller
 {
@@ -14,7 +16,8 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $response = DB ::connection('mysql')->select('select * from product_category_models');
+        return $response;
     }
 
     /**

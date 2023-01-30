@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductVoucherController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,25 +17,32 @@ use App\Http\Controllers\MemberController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('/admin/layout/layout');
 });
 
 Route::get('/product', [ProductController::class, 'index'])->name('product.list');
-Route::get('/product-add', [ProductController::class, 'create'])->name('product.add');
-Route::get('/product-create', [ProductController::class, 'store'])->name('product.create');
-Route::get('/product-edit', [ProductController::class, 'edit'])->name('product.edit');
-Route::get('/product-update', [ProductController::class, 'update'])->name('product.update');
-Route::get('/product-delete', [ProductController::class, 'delete'])->name('product.delete');
+Route::get('/postproduct', [ProductController::class, 'create']);
+Route::post('/storemember', [MemberController::class, 'store']);
+Route::get('/editproduct/{id}', [ProductController::class, 'edit'])->name('product.edit');
+Route::post('/updateproduct', [ProductController::class, 'update'])->name('product.update');
+Route::post('/deleteproduct/{id}', [ProductController::class, 'delete'])->name('product.delete');
 
 
 Route::get('/member', [MemberController::class, 'index'])->name('member.list');
-Route::get('/member-add', [MemberController::class, 'create'])->name('member.add');
-Route::get('/member-create', [MemberController::class, 'store'])->name('member.create');
-Route::get('/member-edit', [MemberController::class, 'edit'])->name('member.edit');
-Route::get('/member-update', [MemberController::class, 'update'])->name('member.update');
-Route::get('/member-delete', [MemberController::class, 'delete'])->name('member.delete');
+Route::get('/addmember', [MemberController::class, 'create']);
+Route::post('/storemember', [MemberController::class, 'store']);
+Route::get('/editmember/{id}', [MemberController::class, 'edit'])->name('member.edit');
+Route::post('/updatemember', [MemberController::class, 'update'])->name('updatemember');
+Route::get('/deletemember/{id}', [MemberController::class, 'destroy'])->name('deletemember');
 
+Route::get('/voucher', [ProductVoucherController::class, 'index'])->name('voucher.list');
+Route::post('/postvoucher', [ProductVoucherController::class, 'create'])->name('voucher.add');
+Route::get('/editvoucher', [ProductVoucherController::class, 'edit'])->name('voucher.edit');
+Route::post('/updatevoucher', [ProductVoucherController::class, 'update'])->name('voucher.update');
+Route::post('/deletevoucher', [ProductVoucherController::class, 'delete'])->name('voucher.delete');
 
-
-Route::post('/postnews', [NewsController::class, 'store'])->name('postnews');
-Route::post('/postcategory', [CategoryController::class, 'store'])->name('postcategory');
+Route::get('/category', [ProductCategoryController::class, 'index'])->name('category.list');
+Route::post('/postcategory', [ProductCategoryController::class, 'create'])->name('category.add');
+Route::get('/editcategory', [ProductCategoryController::class, 'edit'])->name('category.edit');
+Route::post('/updatecategory', [ProductCategoryController::class, 'update'])->name('category.update');
+Route::post('/deletecategory', [ProductCategoryController::class, 'delete'])->name('category.delete');

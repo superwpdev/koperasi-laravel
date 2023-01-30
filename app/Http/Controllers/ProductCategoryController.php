@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use DB;
 
 class ProductCategoryController extends Controller
 {
@@ -23,7 +25,30 @@ class ProductCategoryController extends Controller
      */
     public function create()
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'category' => $request->category,
+        
+        ]);
+        $category = $request->category;
+
+        $postnews = DB::connection('mysql')->insert("INSERT INTO tbl_category (category)
+        VALUE
+        ('".$category."')");
+
+        if ($postnews){
+        $res = response()->json(
+        [
+        'status' => 'success'
+        ], 200);
+        }
+        else
+        {
+        $res = response()->json(
+        [
+        'status' => 'failed'
+        ], 500);
+        }
+        return $res;
     }
 
     /**

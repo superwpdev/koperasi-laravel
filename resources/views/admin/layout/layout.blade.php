@@ -6,9 +6,9 @@
 </head>
 <body>
 
-<table class="table" border="1" width="100%" height="100%">
+<table class="table" width="100%" height="100%">
     <tr>
-        <td width="25%" colspan="2"> ini header</td>
+        <td width="25%" colspan="2"> <h1> Koperasi</h1></td>
        
     </tr>
     <tr>
@@ -16,9 +16,9 @@
         <td>
             
    <!-- KONTEN -->
-            <main class="wrapper">
-            @yield('konten')
-         </main></td>
+    <main class="wrapper">
+    @yield('konten')
+    </main></td>
     </tr>
     <tr >
         
@@ -33,6 +33,7 @@
 @yield('script')
 </body>
 </html>
+
 
 
 

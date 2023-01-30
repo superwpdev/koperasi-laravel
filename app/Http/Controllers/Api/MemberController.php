@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use DB;
 
 class MemberController extends Controller
 {
@@ -14,7 +16,8 @@ class MemberController extends Controller
      */
     public function index()
     {
-        //
+        $response = DB ::connection('mysql')->select('select * from member_models');
+        return $response;
     }
 
     /**
@@ -22,10 +25,37 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'name' => $request->name,
+        
+        ]);
+        $name = $request->name;
+        $address = $request->address;
+        $telp = $request->telp;
+        $email = $request->email;
+
+        $postmember = DB::connection('mysql')->insert("INSERT INTO member_models (name, address, telp, email)
+        VALUE
+        ('".$name."','".$address."','".$telp."','".$email."')");
+
+        if ($postmember){
+        $res = response()->json(
+        [
+        'status' => 'success'
+        ], 200);
+        }
+        else
+        {
+        $res = response()->json(
+        [
+        'status' => 'failed'
+        ], 500);
+        }
+        return $res;
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -78,8 +108,11 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        // $id=$request->id;
+        // $name=$request->name;
+        $deletemember = DB::delete("DELETE FROM member_models WHERE id=".$id.";");
+        return true;
     }
 }

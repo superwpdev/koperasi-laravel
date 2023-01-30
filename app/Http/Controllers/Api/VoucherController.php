@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use DB;
 
 class VoucherController extends Controller
 {
@@ -14,7 +16,8 @@ class VoucherController extends Controller
      */
     public function index()
     {
-        //
+        $response = DB ::connection('mysql')->select('select * from voucher_models');
+        return $response;
     }
 
     /**
@@ -80,6 +83,9 @@ class VoucherController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $id=$request->id;
+        $category=$request->category;
+        $edit=DB::connection('mysql')->delete("DELETE FROM member_models WHERE id=".$id);
+        return true;
     }
 }
