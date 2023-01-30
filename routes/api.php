@@ -29,6 +29,9 @@ Route::delete('/delproduct', 'App\Http\Controllers\Api\ProductController@destroy
 
 route::post('postproductcategory', [ProductCategoryController::class, 'create']);
 route::get('getproductcategory', [ProductCategoryController::class, 'index']);
+Route::delete('/delproductcat/{id}', 'App\Http\Controllers\Api\ProductCategoryController@destroy');
+Route::put('/putproductcat', 'App\Http\Controllers\Api\ProductCategoryController@update');
+
 route::get('getmember', [MemberController::class, 'index']);
 route::post('postmember', [MemberController::class, 'create']);
 route::get('getvoucher', [VoucherController::class, 'index']);
