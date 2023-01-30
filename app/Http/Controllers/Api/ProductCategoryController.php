@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\category_model;
+use App\Models\product_category_model;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -113,12 +113,12 @@ class ProductCategoryController extends Controller
         }
 
         //update to database
-        $wali = category_model::where('id', $request->id)->update([
+        $category = product_category_model::where('id', $request->id)->update([
             'category'     => $request->category,
             'status'   => $request->status
         ]);
 
-        $result = category_model::where('id', $request->id)->first();
+        $result = product_category_model::where('id', $request->id)->first();
 
         return new CategoryResource($result);
     }
@@ -131,10 +131,8 @@ class ProductCategoryController extends Controller
      */
     public function destroy($id)
     {
-        //mencari data sesuai $id
         $deletecategory = DB::delete("DELETE FROM product_category_models WHERE id=" . $id . ";");
 
-        // jika data berhasil didelete maka tampilkan pesan json 
         $result = array("status" => "sukses", "message" => "Hapus Berhasil");
         return new CategoryResource($result);
     }

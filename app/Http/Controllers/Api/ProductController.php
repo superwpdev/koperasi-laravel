@@ -125,7 +125,7 @@ class ProductController extends Controller
         }
 
         //update to database
-        $wali = product_model::where('id', $request->id)->update([
+        $product = product_model::where('id', $request->id)->update([
             'id_category'     => $request->id_category,
             'product'   => $request->product,
             'description'     => $request->description,

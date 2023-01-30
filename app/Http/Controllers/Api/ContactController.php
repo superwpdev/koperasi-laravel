@@ -26,9 +26,37 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => $request->name
+        ]);
+
+        $name = $request->name;
+        $email = $request->email;
+        $subject = $request->subject;
+        $message = $request->message;
+
+        $postmember = DB::connection('mysql')->insert("INSERT INTO contact_models (name, email, telp, subject, message)
+        VALUE
+        ('" . $name . "', '" . $email . "', '" . $subject . "', '" . $message . "')");
+
+        if ($postmember) {
+            $res = response()->json(
+                [
+                    'status' => 'succes'
+                ],
+                200
+            );
+        } else {
+            $res = response()->json(
+                [
+                    'status' => 'failed'
+                ],
+                500
+            );
+        }
+        return $res;
     }
 
     /**

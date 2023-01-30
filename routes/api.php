@@ -34,6 +34,13 @@ Route::put('/putproductcat', 'App\Http\Controllers\Api\ProductCategoryController
 
 route::get('getmember', [MemberController::class, 'index']);
 route::post('postmember', [MemberController::class, 'create']);
+Route::delete('/delmember/{id}', 'App\Http\Controllers\Api\MemberCategoryController@destroy');
+Route::put('/putmember', 'App\Http\Controllers\Api\MemberCategoryController@update');
+
 route::get('getvoucher', [VoucherController::class, 'index']);
 route::post('postvoucher', [VoucherController::class, 'create']);
+Route::delete('/delvoucher/{id}', 'App\Http\Controllers\Api\VoucherCategoryController@destroy');
+Route::put('/putvoucher', 'App\Http\Controllers\Api\VoucherCategoryController@update');
+
 route::get('getcontact', [ContactController::class, 'index']);
+route::post('postcontact', [ContactController::class, 'create']);
