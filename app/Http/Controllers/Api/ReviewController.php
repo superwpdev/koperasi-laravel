@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use DB;
 
-class ContactController extends Controller
+class ReviewController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +15,9 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $response = DB::connection('mysql')->select('select * from contact_models');
+        $response = DB::connection('mysql')->select('select * from review_models');
         return $response;
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -34,12 +32,11 @@ class ContactController extends Controller
 
         $name = $request->name;
         $email = $request->email;
-        $subject = $request->subject;
-        $message = $request->message;
+        $review = $request->review;
 
-        $postmember = DB::connection('mysql')->insert("INSERT INTO contact_models (name, email, subject, message)
+        $postmember = DB::connection('mysql')->insert("INSERT INTO review_models (name, email, review)
         VALUE
-        ('" . $name . "', '" . $email . "', '" . $subject . "', '" . $message . "')");
+        ('" . $name . "', '" . $email . "', '" . $review . "')");
 
         if ($postmember) {
             $res = response()->json(

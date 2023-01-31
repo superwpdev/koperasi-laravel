@@ -47,4 +47,11 @@ Route::delete('/delvoucher/{id}', 'App\Http\Controllers\Api\VoucherCategoryContr
 Route::put('/putvoucher', 'App\Http\Controllers\Api\VoucherCategoryController@update');
 
 route::get('getcontact', [ContactController::class, 'index']);
+<<<<<<< HEAD
 route::post('postcontact', [ContactController::class, 'create']);
+=======
+route::post('postcontact', [ContactController::class, 'create']);
+
+route::get('getreview', [ReviewController::class, 'index']);
+route::post('postreview', [ReviewController::class, 'create']);
+>>>>>>> 390bff0dc5f99b2bd12cc2d07fc46b9565a71d85
