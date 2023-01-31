@@ -26,7 +26,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $rescreateproduct = DB::select("SELECT * from product_models");
+        $listproduct = $rescreateproduct[0];
+        return view('admin.product.add',compact('listproduct'));
     }
 
     /**
@@ -37,7 +39,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id = $request->id;
+        $id_category = $request->id_category;
+        $product = $request->product;
+        $description = $request->description;
+        $price = $request->price;
+        $stock = $request->stock;
+
+        $listproduct = DB::insert("INSERT INTO product_models (id_category, product, description, price, stock)
+        VALUE
+        ('".$id_category."','".$product."','".$description."','".$price."','".$stock."')");
+        return redirect()->route('product.list');
     }
 
     /**
@@ -59,7 +71,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $resfindproduct = DB::select("SELECT * from product_models where id=".$id);
+        $findproduct = $resfindproduct[0];
+        return view('admin.product.edit',compact('findproduct'));
     }
 
     /**
@@ -69,9 +83,18 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $id = $request->id;
+        $id_category = $request->id_category;
+        $product = $request->product;
+        $description = $request->description;
+        $price = $request->price;
+        $stock = $request->stock;
+
+        $updateproduct = DB::update("UPDATE product_models SET id = '".$id."' , id_category = '".$id_category."', product = '".$product."', description = '".$description."', price = '".$price."', stock = '".$stock."' WHERE id = ".$id."; ");
+        
+        return redirect()->route('product.list');
     }
 
     /**
@@ -82,6 +105,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deletenews = DB::delete("DELETE FROM product_models WHERE id=".$id.";");
+        return redirect()->route('product.list');
     }
 }

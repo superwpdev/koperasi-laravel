@@ -1,1 +1,3 @@
-ini footer
+<footer class="footer">
+<p>Copyright &copy; 2023 </p>
+</footer>

@@ -15,7 +15,8 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-       //
+        $res_category = DB::select('select * from product_category_models');
+        return view('admin.category.index',compact('res_category'));
     }
 
     /**
@@ -25,30 +26,9 @@ class ProductCategoryController extends Controller
      */
     public function create()
     {
-        $validator = Validator::make($request->all(),[
-            'category' => $request->category,
-        
-        ]);
-        $category = $request->category;
-
-        $postnews = DB::connection('mysql')->insert("INSERT INTO tbl_category (category)
-        VALUE
-        ('".$category."')");
-
-        if ($postnews){
-        $res = response()->json(
-        [
-        'status' => 'success'
-        ], 200);
-        }
-        else
-        {
-        $res = response()->json(
-        [
-        'status' => 'failed'
-        ], 500);
-        }
-        return $res;
+        $rescreatecategory = DB::select("SELECT * from product_category_models");
+        $listcategory = $rescreatecategory[0];
+        return view('admin.category.add',compact('listcategory'));
     }
 
     /**
@@ -59,7 +39,14 @@ class ProductCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id = $request->id;
+        $category = $request->category;
+        $status = $request->status;
+
+        $listcategory = DB::insert("INSERT INTO product_category_models (category, status)
+        VALUE
+        ('".$category."','".$status."')");
+        return redirect()->route('category.list');
     }
 
     /**
@@ -81,7 +68,9 @@ class ProductCategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $resfindcategory = DB::select("SELECT * from product_category_models where id=".$id);
+        $findcategory = $resfindcategory[0];
+        return view('admin.category.edit',compact('findcategory'));
     }
 
     /**
@@ -91,9 +80,15 @@ class ProductCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $id = $request->id;
+        $category = $request->category;
+        $status = $request->status;
+
+        $updatecategory = DB::update("UPDATE product_category_models SET category = '".$category."', status = '".$status."' WHERE id = ".$id."; ");
+        
+        return redirect()->route('category.list');
     }
 
     /**
@@ -104,6 +99,7 @@ class ProductCategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deletecategory = DB::delete("DELETE FROM product_category_models WHERE id=".$id.";");
+        return redirect()->route('category.list');
     }
 }

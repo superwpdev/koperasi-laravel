@@ -1,9 +1,9 @@
 <div class="sidebar">
-<a href="product" style="text-decoration: none;  color: #919191;"> Product</a>
+<a href="product" style="text-decoration: none; "> Product</a>
 <br>
-<a href="member" style="text-decoration: none;  color: #919191;"> Member</a>
+<a href="member" style="text-decoration: none;  "> Member</a>
 <br>
-<a href="member" style="text-decoration: none;  color: #919191;"> Voucher</a>
+<a href="voucher" style="text-decoration: none; "> Voucher</a>
 <br>
-<a href="member" style="text-decoration: none;  color: #919191;"> Product category</a>
+<a href="category" style="text-decoration: none;"> Product category</a>
 </div>

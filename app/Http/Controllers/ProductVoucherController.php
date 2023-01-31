@@ -15,7 +15,8 @@ class ProductVoucherController extends Controller
      */
     public function index()
     {
-        //
+        $res_voucher = DB::select('select * from voucher_models');
+        return view('admin.voucher.index',compact('res_voucher'));
     }
 
     /**
@@ -25,7 +26,9 @@ class ProductVoucherController extends Controller
      */
     public function create()
     {
-        //
+        $rescreatevoucher = DB::select("SELECT * from voucher_models");
+        $listvoucher = $rescreatevoucher[0];
+        return view('admin.voucher.add',compact('listvoucher'));
     }
 
     /**
@@ -36,7 +39,15 @@ class ProductVoucherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id = $request->id;
+        $voucher_name = $request->voucher_name;
+        $value = $request->value;
+        $status = $request->status;
+
+        $listvoucher = DB::insert("INSERT INTO voucher_models (voucher_name, value, status)
+        VALUE
+        ('".$voucher_name."','".$value."','".$status."')");
+        return redirect()->route('voucher.list');
     }
 
     /**
@@ -58,7 +69,9 @@ class ProductVoucherController extends Controller
      */
     public function edit($id)
     {
-        //
+        $resfindvoucher = DB::select("SELECT * from voucher_models where id=".$id);
+        $findvoucher = $resfindvoucher[0];
+        return view('admin.voucher.edit',compact('findvoucher'));
     }
 
     /**
@@ -68,9 +81,16 @@ class ProductVoucherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $id = $request->id;
+        $voucher_name = $request->voucher_name;
+        $value = $request->value;
+        $status = $request->status;
+
+        $updatevoucher = DB::update("UPDATE voucher_models SET id = '".$id."' , voucher_name = '".$voucher_name."', value = '".$value."', status = '".$status."' WHERE id = ".$id."; ");
+        
+        return redirect()->route('voucher.list');
     }
 
     /**
@@ -81,6 +101,7 @@ class ProductVoucherController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deletevoucher = DB::delete("DELETE FROM voucher_models WHERE id=".$id.";");
+        return redirect()->route('voucher.list');
     }
 }

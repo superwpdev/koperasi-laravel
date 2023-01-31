@@ -4,7 +4,7 @@
 @endsection
 
 @section('konten')
-ini konten product
+<a href="{{url('postproduct/')}}" class="btn btn-primary">Tambah Product</a>
 <table class="table table-responsive">
     <tr>
         <th>No</th>
@@ -24,8 +24,8 @@ ini konten product
         <td>{{ $item->price }}</td>
         <td>{{ $item->stock }}</td>
         <td> 
-            <a class="btn btn-primary" href="{{url('editmember/'.$item->id)}}">Edit</a> 
-            <a class="btn btn-primary" href="{{url('deletemember/'.$item->id)}}">Delete</a>
+            <a class="btn btn-primary" href="{{url('editproduct/'.$item->id)}}">Edit</a> 
+            <a class="btn btn-primary" href="{{url('deleteproduct/'.$item->id)}}">Delete</a>
         </td>
     </tr>
 @endforeach  

@@ -21,11 +21,11 @@ Route::get('/', function () {
 });
 
 Route::get('/product', [ProductController::class, 'index'])->name('product.list');
-Route::get('/postproduct', [ProductController::class, 'create']);
-Route::post('/storemember', [MemberController::class, 'store']);
+Route::get('/postproduct', [ProductController::class, 'create'])->name('product.add');
+Route::post('/storeproduct', [ProductController::class, 'store']);
 Route::get('/editproduct/{id}', [ProductController::class, 'edit'])->name('product.edit');
-Route::post('/updateproduct', [ProductController::class, 'update'])->name('product.update');
-Route::post('/deleteproduct/{id}', [ProductController::class, 'delete'])->name('product.delete');
+Route::post('/updateproduct', [ProductController::class, 'update'])->name('updateproduct');
+Route::get('/deleteproduct/{id}', [ProductController::class, 'destroy'])->name('product.delete');
 
 
 Route::get('/member', [MemberController::class, 'index'])->name('member.list');
@@ -36,13 +36,15 @@ Route::post('/updatemember', [MemberController::class, 'update'])->name('updatem
 Route::get('/deletemember/{id}', [MemberController::class, 'destroy'])->name('deletemember');
 
 Route::get('/voucher', [ProductVoucherController::class, 'index'])->name('voucher.list');
-Route::post('/postvoucher', [ProductVoucherController::class, 'create'])->name('voucher.add');
-Route::get('/editvoucher', [ProductVoucherController::class, 'edit'])->name('voucher.edit');
-Route::post('/updatevoucher', [ProductVoucherController::class, 'update'])->name('voucher.update');
-Route::post('/deletevoucher', [ProductVoucherController::class, 'delete'])->name('voucher.delete');
+Route::get('/postvoucher', [ProductVoucherController::class, 'create'])->name('voucher.add');
+Route::post('/storevoucher', [ProductVoucherController::class, 'store']);
+Route::get('/editvoucher/{id}', [ProductVoucherController::class, 'edit'])->name('voucher.edit');
+Route::post('/updatevoucher', [ProductVoucherController::class, 'update'])->name('updatevoucher');
+Route::get('/deletevoucher/{id}', [ProductVoucherController::class, 'destroy'])->name('voucher.delete');
 
 Route::get('/category', [ProductCategoryController::class, 'index'])->name('category.list');
-Route::post('/postcategory', [ProductCategoryController::class, 'create'])->name('category.add');
-Route::get('/editcategory', [ProductCategoryController::class, 'edit'])->name('category.edit');
-Route::post('/updatecategory', [ProductCategoryController::class, 'update'])->name('category.update');
-Route::post('/deletecategory', [ProductCategoryController::class, 'delete'])->name('category.delete');
+Route::get('/postcategory', [ProductCategoryController::class, 'create'])->name('category.add');
+Route::post('/storecategory', [ProductCategoryController::class, 'store']);
+Route::get('/editcategory/{id}', [ProductCategoryController::class, 'edit'])->name('category.edit');
+Route::post('/updatecategory', [ProductCategoryController::class, 'update'])->name('updatecategory');
+Route::get('/deletecategory/{id}', [ProductCategoryController::class, 'destroy'])->name('category.delete');
