@@ -126,7 +126,7 @@ class ProductCategoryController extends Controller
         $category = $request->category;
         $status = $request->status;
 
-        $updatenews = DB::update("UPDATE product_category_models SET category = '".$category."', status = '".$status."' WHERE id = ".$id."; ");
+        $updateproductcategory = DB::update("UPDATE product_category_models SET category = '".$category."', status = '".$status."' WHERE id = ".$id."; ");
         
         return redirect()->route('getproductcategory');
     }
