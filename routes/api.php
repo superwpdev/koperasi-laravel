@@ -26,6 +26,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/editproductcategory/{id}', [ProductCategoryController::class, 'edit'])->name('editproductcategory');
 Route::post('/updateproductcategory', [ProductCategoryController::class, 'update'])->name('updateproductcategory');
 
+Route::get('/editproduct/{id}', [ProductController::class, 'edit'])->name('editproduct');
+Route::post('/updateproduct', [ProductController::class, 'update'])->name('updateproduct');
+
+Route::get('/editvoucher/{id}', [VoucherController::class, 'edit'])->name('editvoucher');
+Route::post('/updatevoucher', [VoucherController::class, 'update'])->name('updatevoucher');
+
+Route::get('/editmember/{id}', [MemberController::class, 'edit'])->name('editmember');
+Route::post('/updatemember', [MemberController::class, 'update'])->name('updatemember');
+
 route::get('getproduct', [ProductController::class, 'index']);
 route::post('postproduct', [ProductController::class, 'create']);
 //Route::put('/putproduct', 'App\Http\Controllers\Api\ProductController@update');
@@ -52,3 +61,6 @@ Route::post('postcontact', [ContactController::class, 'create']);
 
 Route::get('getreview', [ReviewController::class, 'index']);
 Route::post('postreview', [ReviewController::class, 'create']);
+Route::delete('/delreview/{id}', 'App\Http\Controllers\Api\ReviewCategoryController@destroy');
+Route::get('/editreview/{id}', [ReviewController::class, 'edit'])->name('editreview');
+Route::post('/updatereview', [ReviewController::class, 'update'])->name('updatereview');

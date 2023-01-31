@@ -67,18 +67,6 @@ class ProductCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = $request->category;
-        if (empty($category)) {
-            $res = "data kosong";
-        } else {
-            $insertdb = DB::insert("insert into product_category_models(category) values('" . $category . "')");
-            if ($insertdb) {
-                $res = 'success';
-            } else {
-                $res = 'wooii error gaes';
-            }
-        }
-        return $res;
     }
 
 
@@ -123,7 +111,7 @@ class ProductCategoryController extends Controller
         $updateproductcategory = DB::update("UPDATE product_category_models SET category = '" . $category . "', status = '" . $status . "' WHERE id = " . $id . "; ");
 
         // return redirect()->route('getproductcategory');
-        $result = array("status" => "sukses", "message" => "Hapus Berhasil");
+        $result = array("status" => "sukses", "message" => "Update Berhasil");
         return new CategoryResource($result);
     }
 

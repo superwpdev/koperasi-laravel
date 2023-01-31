@@ -15,8 +15,8 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $response = DB::connection('mysql')->select('select * from review_models');
-        return $response;
+        $resreview = DB::select("select * from review_models");
+        return $resreview;
     }
 
     /**
@@ -86,7 +86,9 @@ class ReviewController extends Controller
      */
     public function edit($id)
     {
-        //
+        $resfindreview = DB::select("SELECT * from review_models where id=" . $id);
+        $findreview = $resfindreview[0];
+        return view('review.edit', compact('findreview'));
     }
 
     /**
@@ -98,7 +100,18 @@ class ReviewController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $id = $request->id;
+        $name = $request->name;
+        $email = $request->email;
+        $review = $request->review;
+
+
+        $updatereview = DB::update("UPDATE review_models SET name = '" . $name . "', email = '" . $email . "', 
+        review = '" . $review . "' WHERE id = " . $id . "; ");
+
+        //return redirect()->route('getproduct');
+        $result = array("status" => "sukses", "message" => "Update Berhasil");
+        return new ReviewResource($result);
     }
 
     /**
@@ -109,6 +122,9 @@ class ReviewController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deletereview = DB::delete("DELETE FROM review_models WHERE id=" . $id . ";");
+
+        $result = array("status" => "sukses", "message" => "Hapus Berhasil");
+        return new ReviewResource($result);
     }
 }

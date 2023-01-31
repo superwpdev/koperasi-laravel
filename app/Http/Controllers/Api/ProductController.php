@@ -19,9 +19,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $response = DB::connection('mysql')->select('select * from product_models');
-        return $response;
-    }
+        $resproduct = DB::select("select * from product_models");
+        return $resproduct;
 
     /**
      * Show the form for creating a new resource.
@@ -75,7 +74,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -97,7 +96,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $resfindproduct= DB::select("SELECT * from product_models where id=".$id);
+        $findproduct = $resfindproduct[0];
+        return view('product.edit',compact('findproduct'));
     }
 
     /**
@@ -110,31 +111,22 @@ class ProductController extends Controller
     public function update(Request $request)
     {
         //set validation
-        $validator = Validator::make($request->all(), [
-            'id_category' => 'required',
-            'product' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'stock' => 'required',
-            'status' => 'required',
-        ]);
+        $id = $request->id;
+        $id_category = $request->id_category;
+        $product = $request->product;
+        $description = $request->description;
+        $image = $request->image;
+        $price = $request->price;
+        $stock = $request->stock;
+        $status = $request->status;
 
-        //response error validation
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
 
-        //update to database
-        $product = product_model::where('id', $request->id)->update([
-            'id_category'     => $request->id_category,
-            'product'   => $request->product,
-            'description'     => $request->description,
-            'price'     => $request->stock,
-            'status'     => $request->status,
-        ]);
 
-        $result = product_model::where('id', $request->id)->first();
-
+        $updateproduct = DB::update("UPDATE product_models SET id_category = '".$id_category."', product = '".$product."', 
+        description = '".$description."',image = '".$image."', price = '".$price."', stock = '".$stock."', status = '".$status."' WHERE id = ".$id."; ");
+        
+        //return redirect()->route('getproduct');
+        $result = array("status" => "sukses", "message" => "Update Berhasil");
         return new ProductResource($result);
     }
 
@@ -146,20 +138,9 @@ class ProductController extends Controller
      */
     public function destroy(Request $request)
     {
-        //set validation
-        $validator = Validator::make($request->all(), [
-            'id'   => 'required'
-        ]);
-
-        //response error validation
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
-
-        $wali = product_model::where('id', $request->id)->delete();
+        $deleteproduct = DB::delete("DELETE FROM product_models WHERE id=" . $id . ";");
 
         $result = array("status" => "sukses", "message" => "Hapus Berhasil");
-
         return new ProductResource($result);
     }
 }

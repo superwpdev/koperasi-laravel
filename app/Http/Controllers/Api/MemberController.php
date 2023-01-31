@@ -19,8 +19,8 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $response = DB::connection('mysql')->select('select * from member_models');
-        return $response;
+        $resmember = DB::select("select * from member_models");
+        return $resmember;
     }
 
 
@@ -94,7 +94,9 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        //
+        $resfindmember = DB::select("SELECT * from member_models where id=" . $id);
+        $findmember = $resfindmember[0];
+        return view('member.edit', compact('findmember'));
     }
 
     /**
@@ -107,30 +109,21 @@ class MemberController extends Controller
     public function update(Request $request, $id)
     {
         //set validation
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'address' => 'required',
-            'telp' => 'required',
-            'email' => 'required',
-            'status' => 'required'
-        ]);
+        $id = $request->id;
+        $name = $request->name;
+        $address = $request->address;
+        $telp = $request->telp;
+        $email = $request->email;
+        $status = $request->status;
 
-        //response error validation
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
 
-        //update to database
-        $voucher = member_model::where('id', $request->id)->update([
-            'name'     => $request->name,
-            'address'   => $request->address,
-            'telp'   => $request->telp,
-            'email'   => $request->email,
-            'status'   => $request->status
-        ]);
 
-        $result = member_model::where('id', $request->id)->first();
 
+        $updatemember = DB::update("UPDATE member_models SET name = '" . $name . "', address = '" . $address . "', 
+        telp = '" . $telp . "',email = '" . $email . "', status = '" . $status . "' WHERE id = " . $id . "; ");
+
+        //return redirect()->route('getproduct');
+        $result = array("status" => "sukses", "message" => "Update Berhasil");
         return new MemberResource($result);
     }
 

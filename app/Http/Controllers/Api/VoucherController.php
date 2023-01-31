@@ -20,8 +20,8 @@ class VoucherController extends Controller
      */
     public function index()
     {
-        $response = DB::connection('mysql')->select('select * from voucher_models');
-        return $response;
+        $resvoucher = DB::select("select * from voucher_models");
+        return $resvoucher;
     }
 
     /**
@@ -95,7 +95,9 @@ class VoucherController extends Controller
      */
     public function edit($id)
     {
-        //
+        $resfindvoucher = DB::select("SELECT * from voucher_models where id=" . $id);
+        $findvoucher = $resfindvoucher[0];
+        return view('voucher.edit', compact('findvoucher'));
     }
 
     /**
@@ -108,26 +110,17 @@ class VoucherController extends Controller
     public function update(Request $request, $id)
     {
         //set validation
-        $validator = Validator::make($request->all(), [
-            'voucher_name' => 'required',
-            'value' => 'required',
-            'status' => 'required'
-        ]);
+        $id = $request->id;
+        $name = $request->name;
+        $value = $request->value;
+        $status = $request->status;
 
-        //response error validation
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
 
-        //update to database
-        $voucher = voucher_model::where('id', $request->id)->update([
-            'voucher_name'     => $request->voucher_name,
-            'value'   => $request->value,
-            'status'   => $request->status
-        ]);
+        $updatevoucher = DB::update("UPDATE voucher_models SET name = '" . $name . "', value = '" . $value . "', 
+        status = '" . $status . "' WHERE id = " . $id . "; ");
 
-        $result = voucher_model::where('id', $request->id)->first();
-
+        //return redirect()->route('getproduct');
+        $result = array("status" => "sukses", "message" => "Update Berhasil");
         return new VoucherResource($result);
     }
 
