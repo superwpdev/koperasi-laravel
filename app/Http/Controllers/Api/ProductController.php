@@ -34,10 +34,11 @@ class ProductController extends Controller
         $product = $request->product;
         $description = $request->description;
         $price = $request->price;
+        $stock = $request->stock;
 
-        $postproduct = DB::connection('mysql')->insert("INSERT INTO product_models (id_category, product, description, price)
+        $postproduct = DB::connection('mysql')->insert("INSERT INTO product_models (id_category, product, description, price, stock)
         VALUE
-        ('".$id_category."','".$product."','".$description."','".$price."')");
+        ('".$id_category."','".$product."','".$description."','".$price."','".$stock."')");
 
         if ($postproduct){
         $res = response()->json(
@@ -118,6 +119,5 @@ class ProductController extends Controller
     public function destroy($id)
     {
         DB::table('product_models')->delete($id);
-
     }
 }

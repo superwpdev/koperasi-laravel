@@ -25,9 +25,34 @@ class VoucherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'voucher_name' => $request->voucher_name,
+        
+        ]);
+        $voucher_name = $request->voucher_name;
+        $value = $request->value;
+        $status = $request->status;
+
+        $postvoucher = DB::connection('mysql')->insert("INSERT INTO voucher_models (voucher_name, value, status)
+        VALUE
+        ('".$voucher_name."','".$value."','".$status."')");
+
+        if ($postvoucher){
+        $res = response()->json(
+        [
+        'status' => 'success'
+        ], 200);
+        }
+        else
+        {
+        $res = response()->json(
+        [
+        'status' => 'failed'
+        ], 500);
+        }
+        return $res;
     }
 
     /**
@@ -60,7 +85,9 @@ class VoucherController extends Controller
      */
     public function edit($id)
     {
-        //
+        $resfindvoucher = DB::select("SELECT * from voucher_models where id=".$id);
+        $findvoucher = $resfindvoucher[0];
+        return $resfindvoucher;
     }
 
     /**
@@ -70,9 +97,15 @@ class VoucherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $id = $request->id;
+        $voucher_name = $request->voucher_name;
+        $value = $request->value;
+        $status = $request->status;
+
+        $edit = DB::update("UPDATE voucher_models SET voucher_name = '".$voucher_name."', value = '".$value."', status = '".$status."' WHERE id = ".$id."; ");
+        return true; 
     }
 
     /**
@@ -83,9 +116,6 @@ class VoucherController extends Controller
      */
     public function destroy($id)
     {
-        $id=$request->id;
-        $category=$request->category;
-        $edit=DB::connection('mysql')->delete("DELETE FROM member_models WHERE id=".$id);
-        return true;
+        DB::table('voucher_models')->delete($id);
     }
 }

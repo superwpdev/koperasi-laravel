@@ -97,9 +97,16 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $id = $request->id;
+        $name = $request->name;
+        $address = $request->address;
+        $telp = $request->telp;
+        $email = $request->email;
+
+        $edit = DB::update("UPDATE member_models SET name = '".$name."', address = '".$address."', telp = '".$telp."', email ='".$email."' WHERE id = ".$id."; ");
+        return true; 
     }
 
     /**
@@ -108,11 +115,8 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        // $id=$request->id;
-        // $name=$request->name;
-        $deletemember = DB::delete("DELETE FROM member_models WHERE id=".$id.";");
-        return true;
+        DB::table('member_models')->delete($id);
     }
 }

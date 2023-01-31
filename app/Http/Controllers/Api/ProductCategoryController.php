@@ -25,9 +25,33 @@ class ProductCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'category' => $request->category,
+        
+        ]);
+        $category = $request->category;
+        $status = $request->status;
+
+        $postcategory = DB::connection('mysql')->insert("INSERT INTO product_category_models (category, status)
+        VALUE
+        ('".$category."','".$status."')");
+
+        if ($postcategory){
+        $res = response()->json(
+        [
+        'status' => 'success'
+        ], 200);
+        }
+        else
+        {
+        $res = response()->json(
+        [
+        'status' => 'failed'
+        ], 500);
+        }
+        return $res;
     }
 
     /**
@@ -70,9 +94,14 @@ class ProductCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $id = $request->id;
+        $category = $request->category;
+        $status = $request->status;
+
+        $edit = DB::update("UPDATE product_category_models SET category = '".$category."', status = '".$status."' WHERE id = ".$id."; ");
+        return true;
     }
 
     /**
@@ -83,6 +112,6 @@ class ProductCategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('product_category_models')->delete($id);
     }
 }
