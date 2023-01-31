@@ -11,9 +11,17 @@
           <div class="card-body ">
             <form action="/insertproduct" method="post" enctype="multipart/form-data">
               @csrf
+              
             <div class="form-floating mb-3">
                 <label for="category">Category</label>
-                <input type="text" class="form-control"  name="id_category" >
+                <select class="form-control" aria-label="Default select example" name="id_category">
+                  <option selected>Pilih Category</option>
+                  @foreach ($categories as $item)
+                    <option value="{{$item->id}}">{{$item->category}}</option>
+                    
+                  @endforeach
+                </select>
+                
                 
               </div>
               <div class="form-floating mb-3">
@@ -41,7 +49,11 @@
               </div>
               <div class="form-floating mb-3">
                 <label for="status">Status</label>
-                <input type="text" class="form-control" id="status" name="status">
+                <select class="form-control" aria-label="Default select example" name="status">
+                  <option selected>Status</option>
+                  <option value="Ready">Ready</option>
+                  <option value="Empty">Empty</option>
+                </select>
                 
               </div>
               <button class="btn btn-primary" type="submit">Submit</button>

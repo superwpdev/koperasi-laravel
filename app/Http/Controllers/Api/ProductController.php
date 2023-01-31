@@ -14,7 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $response = DB ::connection('mysql')->select('select * from product_models');
+        return $response;
     }
 
     /**

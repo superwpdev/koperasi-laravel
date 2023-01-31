@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $res_product = DB::select('select * from product_models');
+        $res_product = DB::select('select p.*,tc.category from product_models as p inner join tbl_category as tc on p.id_category = tc.id');
         return view('product.index',compact('res_product'));
     }
 
@@ -26,7 +26,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-       return view('product.addproduct');
+       $categories = DB::select('select * from tbl_category');
+    //    return($categories);
+       return view('product.addproduct', compact('categories'));
+       
     }
 
     /**
@@ -81,9 +84,12 @@ class ProductController extends Controller
     public function edit($id)
     {
         $resfindproduct = DB::select("SELECT * from product_models where id=".$id);
+        $categories = DB::select('select * from tbl_category');
         // dd($resfindproduct);
         $findproduct = $resfindproduct[0];
-        return view('product.editproduct',compact('findproduct'));
+        return view('product.editproduct',compact('findproduct','categories'));
+
+        
     }
 
     /**
@@ -103,31 +109,24 @@ class ProductController extends Controller
             $request->file('foto')->move('imageproduct/', $image);
             
         }
-
-        // $id = $request->id;
-        // $id_category = $request->id_category;
-        // $product = $request->product;
-        // $description = $request->description;
-        // $price = $request->price;
-        // $stock = $request->stock;
-        // $status = $request->status;
-
-        // DB::update("UPDATE product_models SET id_category = '".$id_category."', product = '".$product."', description = '".$description."', price = '".$price."', stock = '".$stock."', status = '".$status."' WHERE id = ".$id."; ");
-        // return redirect()->route('product');
-        // dd($request->id);
-        // dd($image);
-        DB::table('product_models')
-        ->where('id',$request->id)
-        ->update([
+        
+        
+        $data = [
             'id_category' => $request->input('id_category'),
             'product' => $request->input('product'),
             'description' => $request->input('description'),
-            'image' => $image,
             'price' => $request->input('price'),
             'stock' => $request->input('stock'),
             'status' => $request->input('status'),
-        ]);
+        ];
+        if ($image) {
+            $data['image'] = $image;
+        }
 
+        DB::table('product_models')
+        ->where('id',$request->id)
+        ->update($data);
+        
         // return view('product.index');
         return redirect('product');
     }

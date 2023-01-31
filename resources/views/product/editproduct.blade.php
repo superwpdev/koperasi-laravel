@@ -18,7 +18,13 @@
               <input type="hidden" class="form-control" id="id" name="id" value="{{ $findproduct->id }}" >
             <div class="form-floating mb-3">
                 <label for="category">Category</label>
-                <input type="text" class="form-control" id="category" name="id_category" value="{{ $findproduct->id_category }}" >
+                <select class="form-control" aria-label="Default select example" name="id_category">
+                  <option >Pilih Category</option>
+                  @foreach ($categories as $item)
+                    <option {{$findproduct->id_category == $item->id ? 'selected':'' }} value="{{$item->id}}">{{$item->category}}</option>
+                    
+                  @endforeach
+                </select>
                 
               </div>
               <div class="form-floating mb-3">
@@ -34,6 +40,7 @@
               <div class="form-floating mb-3">
                 <label for="image">Image</label>
                 <input type="file" class="form-control" id="foto" name="foto" value="{{ $findproduct->image }}">
+                <img src="{{ asset('imageproduct/'.$findproduct->image) }}" alt="" style="width:80px;">
               </div>
               <div class="form-floating mb-3">
                 <label for="price">Price</label>

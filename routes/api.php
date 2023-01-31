@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ProductController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,6 +22,9 @@ use App\Http\Controllers\Api\AuthController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('getproduct',[ProductController::class, 'index']);
+
 
 Route::get('getnews',[NewsController::class, 'index']);
 Route::post('postnews',[NewsController::class, 'create']);

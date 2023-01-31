@@ -16,6 +16,7 @@
                 <thead>
                   <tr>
                     <th scope="col">No</th>
+                    <th scope="col">Category</th>
                     <th scope="col">Product</th>
                     <th scope="col">Description</th>
                     <th scope="col">Image</th>
@@ -33,18 +34,19 @@
                         
                   <tr>
                     <th scope="row">{{$no++}}</th>
+                    <td>{{ $item->category }}</td>
                     <td>{{ $item->product }}</td>
                     <td>{{$item->description}}</td>
                     <td>
                       <img src="{{ asset('imageproduct/'.$item->image) }}" alt="" style="width:80px;">
                     </td>
-                    <td>RP. {{$item->price}}</td>
+                    <td>RP. {{number_format($item->price)}}</td>
                     <td>{{$item->stock}}</td>
                     <td>{{$item->status}}</td>
                     
                     <td>
                       <a class="btn btn-primary" href="{{url('editproduct/'.$item->id)}}">Edit</a>
-                        <a class="btn btn-danger" href="{{url('deleteproduct/'.$item->id)}}">Delete</button>
+                      <a class="btn btn-danger" href="{{url('deleteproduct/'.$item->id)}}">Delete</button>
                     </td>
                   </tr>
                   
