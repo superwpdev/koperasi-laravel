@@ -19,8 +19,8 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        $response = DB::connection('mysql')->select('select * from product_category_models');
-        return $response;
+        $rescategory = DB::select("select * from product_category_models");
+        return $rescategory;
     }
 
     /**
@@ -67,7 +67,25 @@ class ProductCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = $request->category;
+        if(empty($category))
+        {
+           $res = "data kosong";
+        }
+        else
+        {
+            $insertdb = DB::insert("insert into product_category_models(category) values('".$category."')");
+            if($insertdb)
+            {
+                $res = 'success';
+            }
+            else
+            {
+                $res = 'wooii error gaes';
+            }
+        }
+        return $res;
+    }
     }
 
     /**
@@ -89,7 +107,9 @@ class ProductCategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $resfindcategory = DB::select("SELECT * from product_category_models where id=".$id);
+        $resfindcategory = $resfindcategory[0];
+        return view('category.edit',compact('findcategory'));
     }
 
     /**
@@ -102,25 +122,13 @@ class ProductCategoryController extends Controller
     public function update(Request $request)
     {
         //set validation
-        $validator = Validator::make($request->all(), [
-            'category' => 'required',
-            'status' => 'required'
-        ]);
+        $id = $request->id;
+        $category = $request->category;
+        $status = $request->status;
 
-        //response error validation
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
-
-        //update to database
-        $category = product_category_model::where('id', $request->id)->update([
-            'category'     => $request->category,
-            'status'   => $request->status
-        ]);
-
-        $result = product_category_model::where('id', $request->id)->first();
-
-        return new CategoryResource($result);
+        $updatenews = DB::update("UPDATE product_category_models SET category = '".$category."', status = '".$status."' WHERE id = ".$id."; ");
+        
+        return redirect()->route('getproductcategory');
     }
 
     /**
@@ -135,5 +143,4 @@ class ProductCategoryController extends Controller
 
         $result = array("status" => "sukses", "message" => "Hapus Berhasil");
         return new CategoryResource($result);
-    }
 }

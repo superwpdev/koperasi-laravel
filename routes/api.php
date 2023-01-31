@@ -22,9 +22,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/editproductcategory/{id}', [ProductControllerController::class, 'edit'])->name('editproductcategory');
+Route::post('/updateproductcategory', [ProductControllerController::class, 'update'])->name('updateproductcategory');
+
 route::get('getproduct', [ProductController::class, 'index']);
 route::post('postproduct', [ProductController::class, 'create']);
-Route::put('/putproduct', 'App\Http\Controllers\Api\ProductController@update');
+//Route::put('/putproduct', 'App\Http\Controllers\Api\ProductController@update');
 Route::delete('/delproduct', 'App\Http\Controllers\Api\ProductController@destroy');
 
 route::post('postproductcategory', [ProductCategoryController::class, 'create']);
