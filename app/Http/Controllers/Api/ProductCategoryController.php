@@ -68,25 +68,19 @@ class ProductCategoryController extends Controller
     public function store(Request $request)
     {
         $category = $request->category;
-        if(empty($category))
-        {
-           $res = "data kosong";
-        }
-        else
-        {
-            $insertdb = DB::insert("insert into product_category_models(category) values('".$category."')");
-            if($insertdb)
-            {
+        if (empty($category)) {
+            $res = "data kosong";
+        } else {
+            $insertdb = DB::insert("insert into product_category_models(category) values('" . $category . "')");
+            if ($insertdb) {
                 $res = 'success';
-            }
-            else
-            {
+            } else {
                 $res = 'wooii error gaes';
             }
         }
         return $res;
     }
-    }
+
 
     /**
      * Display the specified resource.
@@ -107,9 +101,9 @@ class ProductCategoryController extends Controller
      */
     public function edit($id)
     {
-        $resfindcategory = DB::select("SELECT * from product_category_models where id=".$id);
+        $resfindcategory = DB::select("SELECT * from product_category_models where id=" . $id);
         $resfindcategory = $resfindcategory[0];
-        return view('category.edit',compact('findcategory'));
+        return view('category.edit', compact('findcategory'));
     }
 
     /**
@@ -126,9 +120,11 @@ class ProductCategoryController extends Controller
         $category = $request->category;
         $status = $request->status;
 
-        $updatenews = DB::update("UPDATE product_category_models SET category = '".$category."', status = '".$status."' WHERE id = ".$id."; ");
-        
-        return redirect()->route('getproductcategory');
+        $updateproductcategory = DB::update("UPDATE product_category_models SET category = '" . $category . "', status = '" . $status . "' WHERE id = " . $id . "; ");
+
+        // return redirect()->route('getproductcategory');
+        $result = array("status" => "sukses", "message" => "Hapus Berhasil");
+        return new CategoryResource($result);
     }
 
     /**
@@ -143,4 +139,5 @@ class ProductCategoryController extends Controller
 
         $result = array("status" => "sukses", "message" => "Hapus Berhasil");
         return new CategoryResource($result);
+    }
 }

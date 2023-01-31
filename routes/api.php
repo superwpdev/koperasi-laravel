@@ -23,8 +23,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/editproductcategory/{id}', [ProductControllerController::class, 'edit'])->name('editproductcategory');
-Route::post('/updateproductcategory', [ProductControllerController::class, 'update'])->name('updateproductcategory');
+Route::get('/editproductcategory/{id}', [ProductCategoryController::class, 'edit'])->name('editproductcategory');
+Route::post('/updateproductcategory', [ProductCategoryController::class, 'update'])->name('updateproductcategory');
 
 route::get('getproduct', [ProductController::class, 'index']);
 route::post('postproduct', [ProductController::class, 'create']);
@@ -46,12 +46,9 @@ route::post('postvoucher', [VoucherController::class, 'create']);
 Route::delete('/delvoucher/{id}', 'App\Http\Controllers\Api\VoucherCategoryController@destroy');
 Route::put('/putvoucher', 'App\Http\Controllers\Api\VoucherCategoryController@update');
 
-route::get('getcontact', [ContactController::class, 'index']);
-<<<<<<< HEAD
-route::post('postcontact', [ContactController::class, 'create']);
-=======
-route::post('postcontact', [ContactController::class, 'create']);
+Route::get('getcontact', [ContactController::class, 'index']);
+Route::post('postcontact', [ContactController::class, 'create']);
+Route::post('postcontact', [ContactController::class, 'create']);
 
-route::get('getreview', [ReviewController::class, 'index']);
-route::post('postreview', [ReviewController::class, 'create']);
->>>>>>> 390bff0dc5f99b2bd12cc2d07fc46b9565a71d85
+Route::get('getreview', [ReviewController::class, 'index']);
+Route::post('postreview', [ReviewController::class, 'create']);
