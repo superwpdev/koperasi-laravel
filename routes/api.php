@@ -44,3 +44,6 @@ Route::put('/putvoucher', 'App\Http\Controllers\Api\VoucherCategoryController@up
 
 route::get('getcontact', [ContactController::class, 'index']);
 route::post('postcontact', [ContactController::class, 'create']);
+
+route::get('getreview', [ReviewController::class, 'index']);
+route::post('postreview', [ReviewController::class, 'create']);
