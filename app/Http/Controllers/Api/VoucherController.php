@@ -95,7 +95,7 @@ class VoucherController extends Controller
      */
     public function edit($id)
     {
-        / $resfindvoucher = DB::select("SELECT * from voucher_models where id=" . $id);
+        $resfindvoucher = DB::select("SELECT * from voucher_models where id=" . $id);
         $findvoucher = $resfindvoucher[0];
         return view('voucher.edit', compact('findvoucher'));
     }
