@@ -110,7 +110,12 @@ class VoucherController extends Controller
     public function update(Request $request, $id)
     {
         //set validation
-        $id = $request->id;
+        $validator = Validator::make($request->all(), [
+            'voucher_name' => 'required',
+            'value' => 'required',
+            'status' => 'required'
+        ]);
+ //respons error validation
         $voucher_name = $request->voucher_name;
         $value = $request->value;
         $status = $request->status;

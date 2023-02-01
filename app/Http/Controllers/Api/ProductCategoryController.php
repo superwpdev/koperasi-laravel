@@ -117,6 +117,12 @@ class ProductCategoryController extends Controller
     public function update(Request $request)
     {
         //set validation
+        $validator = Validator::make($request->all(), [
+            'category' => 'required',
+            'status' => 'required'
+        ]);
+
+
         $id = $request->id;
         $category = $request->category;
         $status = $request->status;
