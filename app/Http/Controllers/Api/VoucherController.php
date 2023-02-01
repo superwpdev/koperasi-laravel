@@ -107,16 +107,16 @@ class VoucherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //set validation
         $id = $request->id;
-        $name = $request->name;
+        $voucher_name = $request->voucher_name;
         $value = $request->value;
         $status = $request->status;
 
 
-        $updatevoucher = DB::update("UPDATE voucher_models SET name = '" . $name . "', value = '" . $value . "', 
+        $updatevoucher = DB::update("UPDATE voucher_models SET voucher_name = '" . $voucher_name . "', value = '" . $value . "', 
         status = '" . $status . "' WHERE id = " . $id . "; ");
 
         //return redirect()->route('getproduct');

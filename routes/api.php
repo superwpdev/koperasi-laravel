@@ -38,7 +38,7 @@ Route::post('/updatemember', [MemberController::class, 'update'])->name('updatem
 route::get('getproduct', [ProductController::class, 'index']);
 route::post('postproduct', [ProductController::class, 'create']);
 //Route::put('/putproduct', 'App\Http\Controllers\Api\ProductController@update');
-Route::delete('/delproduct', 'App\Http\Controllers\Api\ProductController@destroy');
+Route::delete('/delproduct/{id}', 'App\Http\Controllers\Api\ProductController@destroy');
 
 route::post('postproductcategory', [ProductCategoryController::class, 'create']);
 route::get('getproductcategory', [ProductCategoryController::class, 'index']);
@@ -47,13 +47,13 @@ Route::put('/putproductcat', 'App\Http\Controllers\Api\ProductCategoryController
 
 route::get('getmember', [MemberController::class, 'index']);
 route::post('postmember', [MemberController::class, 'create']);
-Route::delete('/delmember/{id}', 'App\Http\Controllers\Api\MemberCategoryController@destroy');
-Route::put('/putmember', 'App\Http\Controllers\Api\MemberCategoryController@update');
+Route::delete('/delmember/{id}', 'App\Http\Controllers\Api\MemberController@destroy');
+Route::put('/putmember', 'App\Http\Controllers\Api\MemberController@update');
 
 route::get('getvoucher', [VoucherController::class, 'index']);
 route::post('postvoucher', [VoucherController::class, 'create']);
-Route::delete('/delvoucher/{id}', 'App\Http\Controllers\Api\VoucherCategoryController@destroy');
-Route::put('/putvoucher', 'App\Http\Controllers\Api\VoucherCategoryController@update');
+Route::delete('/delvoucher/{id}', 'App\Http\Controllers\Api\VoucherController@destroy');
+Route::put('/putvoucher', 'App\Http\Controllers\Api\VoucherController@update');
 
 Route::get('getcontact', [ContactController::class, 'index']);
 Route::post('postcontact', [ContactController::class, 'create']);
@@ -61,6 +61,6 @@ Route::post('postcontact', [ContactController::class, 'create']);
 
 Route::get('getreview', [ReviewController::class, 'index']);
 Route::post('postreview', [ReviewController::class, 'create']);
-Route::delete('/delreview/{id}', 'App\Http\Controllers\Api\ReviewCategoryController@destroy');
+Route::delete('/delreview/{id}', 'App\Http\Controllers\Api\ReviewController@destroy');
 Route::get('/editreview/{id}', [ReviewController::class, 'edit'])->name('editreview');
 Route::post('/updatereview', [ReviewController::class, 'update'])->name('updatereview');

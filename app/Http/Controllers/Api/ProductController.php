@@ -21,7 +21,7 @@ class ProductController extends Controller
     {
         $resproduct = DB::select("select * from product_models");
         return $resproduct;
-
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -74,7 +74,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        
     }
 
     /**
@@ -96,9 +95,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $resfindproduct= DB::select("SELECT * from product_models where id=".$id);
+        $resfindproduct = DB::select("SELECT * from product_models where id=" . $id);
         $findproduct = $resfindproduct[0];
-        return view('product.edit',compact('findproduct'));
+        return view('product.edit', compact('findproduct'));
     }
 
     /**
@@ -122,9 +121,9 @@ class ProductController extends Controller
 
 
 
-        $updateproduct = DB::update("UPDATE product_models SET id_category = '".$id_category."', product = '".$product."', 
-        description = '".$description."',image = '".$image."', price = '".$price."', stock = '".$stock."', status = '".$status."' WHERE id = ".$id."; ");
-        
+        $updateproduct = DB::update("UPDATE product_models SET id_category = '" . $id_category . "', product = '" . $product . "', 
+        description = '" . $description . "',image = '" . $image . "', price = '" . $price . "', stock = '" . $stock . "', status = '" . $status . "' WHERE id = " . $id . "; ");
+
         //return redirect()->route('getproduct');
         $result = array("status" => "sukses", "message" => "Update Berhasil");
         return new ProductResource($result);
@@ -136,7 +135,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
         $deleteproduct = DB::delete("DELETE FROM product_models WHERE id=" . $id . ";");
 
