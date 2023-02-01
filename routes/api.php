@@ -24,8 +24,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 route::get('getproduct', [ProductController::class, 'index']);
 route::post('postproduct', [ProductController::class, 'create']);
-Route::put('/putproduct', 'App\Http\Controllers\Api\ProductController@update');
-Route::delete('/delproduct', 'App\Http\Controllers\Api\ProductController@destroy');
+// Route::put('/putproduct', 'App\Http\Controllers\Api\ProductController@update');
+Route::put('putproduct/{id}', [ProductController::class, 'update']);
+// Route::delete('/delproduct', 'App\Http\Controllers\Api\ProductController@destroy');
+Route::delete('delproduct/{id}', [ProductController::class, 'destroy']);
+
+// Route::resource('/product', ProductController::class);
 
 route::post('postproductcategory', [ProductCategoryController::class, 'create']);
 route::get('getproductcategory', [ProductCategoryController::class, 'index']);

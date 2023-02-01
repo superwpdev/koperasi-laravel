@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\product_category_model;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use DB;
-use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductCategoryController extends Controller
 {
@@ -19,8 +21,12 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        $response = DB::connection('mysql')->select('select * from product_category_models');
-        return $response;
+        // $response = DB::connection('mysql')->select('select * from product_category_models');
+        // return $response;
+
+        $rescategory = DB::select("select * from product_category_models");
+        return $rescategory;
+       
     }
 
     /**
@@ -59,6 +65,7 @@ class ProductCategoryController extends Controller
         }
         return $res;
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -78,7 +85,12 @@ class ProductCategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = product_model::findOrFail($id);
+        $response =[
+            'message' => 'detail category',
+            'data' => $category
+        ];
+        return response()->json($response, Response::HTTP_OK);
     }
 
     /**
@@ -90,6 +102,9 @@ class ProductCategoryController extends Controller
     public function edit($id)
     {
         //
+        $resfindcategory = DB::select("SELECT * from product_category_models where id=" . $id);
+        $resfindcategory = $resfindcategory[0];
+        return view('category.edit', compact('findcategory'));
     }
 
     /**
@@ -102,24 +117,14 @@ class ProductCategoryController extends Controller
     public function update(Request $request)
     {
         //set validation
-        $validator = Validator::make($request->all(), [
-            'category' => 'required',
-            'status' => 'required'
-        ]);
+        $id = $request->id;
+        $category = $request->category;
+        $status = $request->status;
 
-        //response error validation
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
+        $updateproductcategory = DB::update("UPDATE product_category_models SET category = '" . $category . "', status = '" . $status . "' WHERE id = " . $id . "; ");
 
-        //update to database
-        $category = product_category_model::where('id', $request->id)->update([
-            'category'     => $request->category,
-            'status'   => $request->status
-        ]);
-
-        $result = product_category_model::where('id', $request->id)->first();
-
+        // return redirect()->route('getproductcategory');
+        $result = array("status" => "sukses", "message" => "Update Berhasil");
         return new CategoryResource($result);
     }
 
@@ -129,11 +134,12 @@ class ProductCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy( $id)
     {
         $deletecategory = DB::delete("DELETE FROM product_category_models WHERE id=" . $id . ";");
 
         $result = array("status" => "sukses", "message" => "Hapus Berhasil");
         return new CategoryResource($result);
+        }
     }
-}
+
